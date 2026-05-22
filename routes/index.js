@@ -1,57 +1,75 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-const db = require("../db");
+const mysql = require("mysql2");
 
-// Home
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "blog_app"
+});
+
+db.connect((err) => {
+  if (err) {
+    console.log("Database connection failed:", err);
+  } else {
+    console.log("Connected to MySQL");
+  }
+});
+
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/index.html"));
+  res.sendFile(path.join(__dirname, "../register.html"));
 });
 
-// Register page
 router.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/register.html"));
+  res.sendFile(path.join(__dirname, "../register.html"));
 });
 
-// Login page
 router.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/login.html"));
+  res.sendFile(path.join(__dirname, "../login.html"));
 });
 
-// Register POST
+router.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dashboard.html"));
+});
+
 router.post("/register", (req, res) => {
   const { name, email, password } = req.body;
 
-  const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+  db.query(
+    "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+    [name || "", email, password],
+    (err) => {
+      if (err) {
+        console.log("Register error:", err);
+        return res.send("Register error");
+      }
 
-  db.query(sql, [name, email, password], (err, result) => {
-    if (err) {
-      console.log(err);
-      res.send("Error saving user");
-    } else {
-      res.send("User registered successfully ✅");
+      res.redirect("/login");
     }
-  });
+  );
 });
 
-// Login POST
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  db.query(
+    "SELECT * FROM users WHERE email = ? AND password = ?",
+    [email, password],
+    (err, results) => {
+      if (err) {
+        console.log("Login error:", err);
+        return res.send("Login error");
+      }
 
-  db.query(sql, [email, password], (err, results) => {
-    if (err) {
-      console.log(err);
-      res.send("Error during login");
-    } else {
       if (results.length > 0) {
-        res.send("Login successful 🎉");
+        res.redirect("/dashboard");
       } else {
-        res.send("Invalid email or password ❌");
+        res.send("Invalid email or password");
       }
     }
-  });
+  );
 });
 
 module.exports = router;
