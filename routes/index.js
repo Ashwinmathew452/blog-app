@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const mysql = require("mysql2");
+const bcrypt = require("bcrypt");
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -31,15 +32,17 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/dashboard.html"));
+  res.sendFile(path.join(__dirname, "../views/index.html"));
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   db.query(
     "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-    [name || "", email, password],
+    [name || "", email, hashedPassword],
     (err) => {
       if (err) {
         console.log("Register error:", err);
@@ -55,15 +58,22 @@ router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   db.query(
-    "SELECT * FROM users WHERE email = ? AND password = ?",
-    [email, password],
-    (err, results) => {
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    async (err, results) => {
       if (err) {
         console.log("Login error:", err);
         return res.send("Login error");
       }
 
-      if (results.length > 0) {
+      if (results.length === 0) {
+        return res.send("Invalid email or password");
+      }
+
+      const user = results[0];
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
         res.redirect("/dashboard");
       } else {
         res.send("Invalid email or password");
