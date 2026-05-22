@@ -19,19 +19,19 @@ db.connect((err) => {
 });
 
 router.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../register.html"));
+  res.sendFile(path.join(__dirname, "../views/register.html"));
 });
 
 router.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "../register.html"));
+  res.sendFile(path.join(__dirname, "../views/register.html"));
 });
 
 router.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../login.html"));
+  res.sendFile(path.join(__dirname, "../views/login.html"));
 });
 
 router.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dashboard.html"));
+  res.sendFile(path.join(__dirname, "../views/dashboard.html"));
 });
 
 router.post("/register", (req, res) => {
