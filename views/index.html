@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blog App</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to Blog App 🚀</h1>
-    <p>This is your home page</p>
+
+<h1>Blog Dashboard 🚀</h1>
+
+<h2>Create Post</h2>
+
+<form action="/create-post" method="POST">
+
+    <label>Title:</label><br>
+    <input type="text" name="title"><br><br>
+
+    <label>Content:</label><br>
+    <textarea name="content"></textarea><br><br>
+
+    <button type="submit">Create Post</button>
+
+</form>
+
+<hr>
+
+<h2>All Posts</h2>
+
+<div id="posts">
+    Posts will appear here
+</div>
+
 </body>
 </html>

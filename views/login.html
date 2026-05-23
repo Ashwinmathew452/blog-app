@@ -1,21 +1,122 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+  <title>Login - AWS Blog App</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    .navbar {
+      background: #111827;
+      padding: 18px 40px;
+      border-bottom: 3px solid #ff9900;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: #ff9900;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 430px;
+      margin: 80px auto;
+      background: #1e293b;
+      padding: 35px;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      color: #ff9900;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    p {
+      text-align: center;
+      color: #cbd5e1;
+    }
+
+    label {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 10px 0 18px 0;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      background: #0f172a;
+      color: white;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      background: #ff9900;
+      color: #111827;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #ffaa33;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer-link {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
+
 <body>
 
-    <h1>Login Page</h1>
+  <div class="navbar">
+    <div class="logo">AWS Blog App</div>
+    <div>Secure Cloud Login</div>
+  </div>
+
+  <div class="container">
+    <h1>Login</h1>
+    <p>Access your secure blog dashboard</p>
 
     <form action="/login" method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email"><br><br>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter your email" required>
 
-        <label>Password:</label><br>
-        <input type="password" name="password"><br><br>
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Enter your password" required>
 
-        <button type="submit">Login</button>
+      <button type="submit">Login</button>
     </form>
+
+    <div class="footer-link">
+      <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+  </div>
 
 </body>
 </html>
