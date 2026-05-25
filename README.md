@@ -51,7 +51,7 @@ The project demonstrates cloud deployment, authentication, database integration,
 ### Cloud Deployment
 - AWS EC2 Deployment
 - GitHub Version Control
-- Cloud Monitoring using AWS CloudWatch
+- Cloud Monitoring
 
 ---
 
